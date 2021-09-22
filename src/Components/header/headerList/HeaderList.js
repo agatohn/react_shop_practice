@@ -3,11 +3,13 @@ import data from "../../../data";
 
 const HeaderList = () => {
   return (
-    <ul>
-      {data.header.map((headerItem) => (
-        <li key={headerItem}>{headerItem}</li>
-      ))}
-    </ul>
+    <nav>
+      <ul>
+        {data.header.map((headerItem) => (
+          <li key={headerItem}>{headerItem}</li>
+        ))}
+      </ul>
+    </nav>
   );
 };
 

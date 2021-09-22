@@ -5,10 +5,10 @@ import LaptopList from "../laptopList/LaptopList";
 
 const Main = () => {
   return (
-    <>
+    <main>
       <PhoneList phones={data.phones} />
       <LaptopList laptops={data.laptops} />
-    </>
+    </main>
   );
 };
 
