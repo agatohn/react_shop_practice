@@ -1,15 +1,18 @@
 import React from "react";
 import data from "../../../data";
+import { HeaderlistContainer } from "./headerListStyled";
 
 const HeaderList = () => {
   return (
-    <nav>
-      <ul>
+    <HeaderlistContainer>
+      <ul className="headerList">
         {data.header.map((headerItem) => (
-          <li key={headerItem}>{headerItem}</li>
+          <li className="headerListItem" key={headerItem}>
+            {headerItem}
+          </li>
         ))}
       </ul>
-    </nav>
+    </HeaderlistContainer>
   );
 };
 
