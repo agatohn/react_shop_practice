@@ -7,14 +7,9 @@ export const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* .headerLogo {
-    text-decoration: none;
-    color: white;
-    font-weight: 700;
-  } */
   .headerLogoIcon {
     width: 40px;
     height: 40px;
-    fill: white;
+    fill: ${(props) => props.theme.colors.text};
   }
 `;
