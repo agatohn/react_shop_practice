@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import Styled from "styled-components";
 
-export const MainContainer = styled.main`
+export const MainContainer = Styled.main`
   padding: 0 40px;
   /* @media; */
 `;
