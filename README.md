@@ -1,70 +1,105 @@
-# Getting Started with Create React App
+# lesson5: `"React Router"`
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Task 1. Подключение библиотеки `react-router-dom` в проект
 
-## Available Scripts
+- установите пакет `react-router-dom`
+- в файле index.js (в папке src), оберните весь проект в компонент `<BrowserRouter>`.
 
-In the project directory, you can run:
+## Task 2. Создание страниц навигации
 
-### `npm start`
+- Создайте в папке src папку `pages`, а в ней компоненты `HomePage`, `ProductsPage`, `CartPage`, `AdminPage`, `ProfilePage` и `AuthPage`.
+- Содержимым компонентов пусть, будет разметка из объекта `Main` по соответствующим компонентам (перенесите их). Выполните соответствующие импорты и произведите рефакторинг пропов. Пока содержимое компонетов `Section` закоментируйте
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Task 3. Создание массива объектов навигации
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- создайте в папке `src` папку routes, а в ней файл `mainRoutes.js`.
+- добавьте в файл массив объектов `mainRoutes`.
 
-### `npm test`
+```javascript
+export const mainRoutes = [
+  {
+    name: "Home",
+    path: "/",
+    component: HomePage,
+    exact: true,
+  },
+  {
+    name: "Products",
+    path: "/products",
+    component: ProductsPage,
+    exact: false,
+  },
+  {
+    name: "Cart",
+    path: "/cart",
+    component: CartPage,
+    exact: false,
+  },
+  {
+    name: "Administration",
+    path: "/admin",
+    component: AdminPage,
+    exact: false,
+  },
+  {
+    name: "Registration",
+    path: "/registration",
+    component: AuthPage,
+    exact: false,
+  },
+  {
+    name: "Login",
+    path: "/login",
+    component: AuthPage,
+    exact: false,
+  },
+];
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Произведите импорт соответствующих компонентов.
 
-### `npm run build`
+## Task 4. Создание маршрутизации в объекте `HeaderList`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- выполните рефакторинг компонента `HeaderList` заменив anchor на компонент NavLink. Добавьте классы и активные классы. Используйте массив mainRoutes для создания навигации.
+- проверьте работоспособность проекта и правильную работу элемнтов навигации.
+- удалите папку `data`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Task 5. Рефакторинг компонента `Main`. Привязка `URL` и компонета для рендера
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- в компоненте `main`, используя массив `mainRoutes`, выполните рефакторинг так, чтобы компонент позволял связать определенный URL и компоненты для рендера. Для этого создайте обертку (Switch) и в ней компоненты Route.
 
-### `npm run eject`
+```javascript
+<MainContainer>
+  <Switch>
+    {mainRoutes.map(({ path, exact, component }) => (
+      <Route path={path} exact={exact} component={component} />
+    ))}
+  </Switch>
+</MainContainer>
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- проверьте работоспособность проекта и правильную работу элемнтов навигации.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Task 6. Создание вложенной навигации компонета `Products`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- в папке routes создайте файл `productsRoutes.js`.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```javascript
+export const productsRoutes = [
+  {
+    name: "Phones",
+    path: "/phones",
+    component: PhoneList,
+    exact: true,
+  },
+  {
+    name: "Laptops",
+    path: "/laptops",
+    component: LaptopList,
+    exact: true,
+  },
+];
+```
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- в компонете ProductsPage, путем перебора массива productsRoutes добавьте компонеты Navlink.
+- проверьте работоспособность проекта и правильную работу элементов навигации.
