@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const ListItemContainer = styled.li`
+export const ProductDetailsContainer = styled.div`
   width: 100%;
   padding: 20px;
 
@@ -11,7 +11,7 @@ export const ListItemContainer = styled.li`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 330px;
+    margin-top: 20px;
   }
   .listItemTitle {
     font-size: 16px;

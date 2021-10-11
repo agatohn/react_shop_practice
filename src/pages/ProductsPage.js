@@ -1,29 +1,45 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { productsRoutes } from "../routes/productsRoutes";
-import { NavLink } from "react-router-dom";
+import { NavLink, Route, Switch } from "react-router-dom";
 import { ProductsPageContainer } from "./ProductsPageStyled";
+import Section from "../Components/section/Section";
 
-const ProductsPage = ({ match, phones, laptops, addToCart }) => {
+const ProductsPage = ({ match, data }) => {
   return (
     <ProductsPageContainer>
       <ul className='navigationList'>
-        {productsRoutes.map((route) => (
-          <li className='navigationListItem' key={route.path}>
-            <NavLink
-              to={match.url + route.path}
-              exact={route.exact}
-              className='navigationListItemAnchor'>
-              {route.name}
-            </NavLink>
-          </li>
-        ))}
-        {/* <Section title='Мобильные телефоны'>
-        <PhoneList phones={phones} addToCart={addToCart} />
-      </Section>
-      <Section title='Ноутбуки'>
-        <LaptopList laptops={laptops} addToCart={addToCart} />
-      </Section> */}
+        {productsRoutes.map(
+          (route) =>
+            route.isLink && (
+              <li className='navigationListItem' key={route.path}>
+                <NavLink
+                  to={match.url + route.path}
+                  exact={route.exact}
+                  className='navigationListItemAnchor'>
+                  {route.name}
+                </NavLink>
+              </li>
+            )
+        )}
       </ul>
+      <Suspense fallback={<h2>...loading</h2>}>
+        <Switch>
+          {productsRoutes.map(
+            ({ name, path, exact, component: MyComponent }) => (
+              <Route
+                key={path}
+                path={match.path + path}
+                exact={exact}
+                render={() => (
+                  <Section title={name}>
+                    <MyComponent {...data} />
+                  </Section>
+                )}
+              />
+            )
+          )}
+        </Switch>
+      </Suspense>
     </ProductsPageContainer>
   );
 };

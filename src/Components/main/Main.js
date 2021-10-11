@@ -1,7 +1,4 @@
-import React, { Component } from "react";
-import LaptopList from "../laptopList/LaptopList";
-import PhoneList from "../phoneList/PhoneList";
-import Section from "../section/Section";
+import React, { Component, Suspense } from "react";
 import { MainContainer } from "./MainStyled";
 import { Switch, Route } from "react-router-dom";
 import { mainRoutes } from "../../routes/mainRoutes";
@@ -63,14 +60,50 @@ class Main extends Component {
 
   removeAllFromCart = () => this.setState({ cart: [] });
 
+  getData = (name) => {
+    switch (name) {
+      case "products":
+        return {
+          phones: this.state.phones,
+          laptops: this.state.laptops,
+          addToCart: this.addToCart,
+        };
+      case "cart":
+        return {
+          cart: this.state.cart,
+          removeFromCart: this.removeFromCart,
+          createOrder: this.createOrder,
+        };
+      case "administration":
+        return {
+          addNewAdv: this.addNewAdv,
+        };
+
+      default:
+        return {};
+    }
+  };
+
   render() {
     return (
       <MainContainer>
-        <Switch>
-          {mainRoutes.map(({ path, exact, component }) => (
-            <Route path={path} exact={exact} component={component} key={path} />
-          ))}
-        </Switch>
+        <Suspense fallback={<h2>...loading</h2>}>
+          <Switch>
+            {mainRoutes.map(({ name, path, exact, component: MyComponent }) => (
+              <Route
+                path={path}
+                exact={exact}
+                render={(props) => (
+                  <MyComponent
+                    {...props}
+                    data={this.getData(name.toLowerCase())}
+                  />
+                )}
+                key={path}
+              />
+            ))}
+          </Switch>
+        </Suspense>
       </MainContainer>
     );
   }
